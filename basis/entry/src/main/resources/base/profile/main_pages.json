@@ -1,0 +1,10 @@
+{
+    "src": [
+        "pages/Index",
+        "pages/ImagePage",
+        "pages/ItemPage",
+        "pages/StatePage",
+        "pages/PropPage",
+        "pages/AnimationPage"
+    ]
+}
