@@ -1,3 +1,4 @@
+import { Header } from '../components/commonComponents'
 @Entry
 @Component
 struct ImagePage {
@@ -5,6 +6,7 @@ struct ImagePage {
 
     build() {
             Column() {
+                Header({title:'图片案例'})
                 Row(){
                     Image($r('app.media.icon'))
                         .width(this.imageWidth)
