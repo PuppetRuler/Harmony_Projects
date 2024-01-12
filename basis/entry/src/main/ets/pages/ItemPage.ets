@@ -71,7 +71,7 @@ class Item {
     .fontSize(18)
 }
 
-import { Header } from '../components/commonComponents'
+import { Header } from '../common/components/commonComponents'
 
 @Entry
 @Component

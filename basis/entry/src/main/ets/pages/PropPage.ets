@@ -1,5 +1,5 @@
 // 任务类
-import { Header } from '../components/commonComponents'
+import { Header } from '../common/components/commonComponents'
 @Observed
 class Task {
     static id: number = 1

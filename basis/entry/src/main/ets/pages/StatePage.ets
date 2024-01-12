@@ -1,4 +1,4 @@
-import { Header } from '../components/commonComponents'
+import { Header } from '../common/components/commonComponents'
 @Entry
 @Component
 struct StatePage {

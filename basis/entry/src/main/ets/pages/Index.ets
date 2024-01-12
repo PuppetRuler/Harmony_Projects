@@ -1,20 +1,14 @@
 import router from '@ohos.router'
-class RouterInfo {
-    // 页面路径
-    url: string
-    // 页面列表
-    title: string
-
-    constructor(url: string, title: string) {
-        this.url = url
-        this.title = title
-    }
-}
+import RouterInfo from '../viewmodel/RouterInfo'
+import IndexFontSizePanel from '../views/IndexFontSizePanel'
+import Preferences from '../common/util/PreferencesUtil'
 
 @Entry
 @Component
 struct Index {
     @State message: string = '页面列表'
+    @State showPanel: boolean = false
+    @Provide fontSize: number = 16
     private routers: RouterInfo[] = [
         new RouterInfo('pages/ImagePage', '图片查看案例'),
         new RouterInfo('pages/ItemPage', '商品列表案例'),
@@ -22,13 +16,17 @@ struct Index {
         new RouterInfo('pages/PropPage', '人物列表案例'),
         new RouterInfo('pages/AnimationPage','小鱼动画案例'),
         new RouterInfo('pages/LifeCirclePage','生命周期案例1'),
-        new RouterInfo('pages/DocumentListPage','UIAbility启动模式案例')
+        new RouterInfo('pages/DocumentListPage','UIAbility启动模式案例'),
+        new RouterInfo('pages/ShopPage','查询商铺案例'),
+        new RouterInfo('pages/TaskManage','任务列表持久化案例'),
+        new RouterInfo('pages/NotificationPage','通知案例')
     ]
 
     tag:string = 'Index Page'
-
-    aboutToAppear(){
+    // 页面生命周期
+    async aboutToAppear(){
         console.log(this.tag,'about to appear')
+        this.fontSize = await Preferences.getPreferenceValue('MyPreferences','IndexFontSize',this.fontSize) as number
     }
 
     onPageShow(){
@@ -49,11 +47,10 @@ struct Index {
 
     build() {
         Column() {
-            Text(this.message)
-                .fontSize(50)
-                .fontWeight(FontWeight.Bold)
-                .height(80)
+            // 首页标题
+            this.Title()
 
+            // 导航列表
             List({ space: 15 }) {
                 ForEach(
                     this.routers,
@@ -68,6 +65,14 @@ struct Index {
             .alignListItem(ListItemAlign.Center)
             .width("100%")
             .height("100%")
+
+            // 字体修改面板
+            if(this.showPanel){
+                IndexFontSizePanel()
+                    .transition({
+                        translate: { y: 115 }
+                    })
+            }
         }
     }
 
@@ -75,11 +80,11 @@ struct Index {
     RouterItem(r: RouterInfo, i: number) {
         Row() {
             Text(i + '.')
-                .fontSize(20)
+                .fontSize(this.fontSize)
                 .fontColor(Color.White)
             Blank()
             Text(r.title)
-                .fontSize(20)
+                .fontSize(this.fontSize)
                 .fontColor(Color.White)
         }
         .width('90%')
@@ -102,5 +107,22 @@ struct Index {
                 }
             )
         })
+    }
+
+    @Builder
+    Title(){
+        Row(){
+            Text(this.message)
+                .fontSize(50)
+                .fontWeight(FontWeight.Bold)
+                .height(80)
+            Image($r('app.media.ic_public_settings'))
+                .width(30)
+                .onClick(() => {
+                    animateTo({ duration: 500, curve: Curve.EaseOut }, () => this.showPanel = !this.showPanel)
+                })
+        }
+        .justifyContent(FlexAlign.SpaceEvenly)
+        .width('100%')
     }
 }

@@ -13,7 +13,7 @@ export struct Header {
                 .width(30)
                 .onClick(() => {
                     // 返回前的警告
-                    router.showAlertBeforeBackPage({message:'当前还未支付，确定要返回吗?'})
+                    // router.showAlertBeforeBackPage({message:'当前还未支付，确定要返回吗?'})
                     // 返回路由
                     router.back()
                 })

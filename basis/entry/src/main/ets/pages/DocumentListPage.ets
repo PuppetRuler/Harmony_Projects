@@ -1,6 +1,6 @@
 import common from '@ohos.app.ability.common'
 import Want from '@ohos.app.ability.Want'
-import { Header } from '../components/commonComponents'
+import { Header } from '../common/components/commonComponents'
 
 @Entry
 @Component
